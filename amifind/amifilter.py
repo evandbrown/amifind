@@ -83,14 +83,23 @@ class AMIFilter(object):
                     
         return self
         
-    def with_region(self, region_name):
+    def with_regions(self, region_names, replace=False):
         """
-        Append a region to this filter
+        Modify the regions for this filter. By default the regions provided
+        will be merged with existing regions for the filter. To replace
+        existing regions, provide the optional merge=False parameter.
+        
+        :param region_names: The region names to merge or overwrite with
+        :type region_names: list
+        
+        :param replace: Should regions replace or be merged with existing values (default is merge)
+        :type replace: bool
         """
-        if self.regions is None:
-            self.regions = [region_name]
+        
+        if not replace and self.regions is not None:
+            self.regions = set(self.regions + region_names)
         else:
-            self.regions.append(region_name)
+            self.regions = region_names
             
         return self
                     
