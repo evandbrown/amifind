@@ -65,7 +65,7 @@ class AMIFilter(object):
             
         return filters
     
-    def add_re_filter(self, attr_to_filter, re_string):
+    def add_re_filter(self, ami_attribute, re_string):
         """
         Add a regular expression filter that will be applied to the
         specified attribute (attr_to_filter) of the list AMIs returned
@@ -73,18 +73,13 @@ class AMIFilter(object):
         added, and are applied to the AMI list retrieved from the 
         EC2 API
         
-        :param attr_to_filter: The attribute of each list item to apply filter to. Valid attributes contained in boto.ec2.image.Image
-        :type attr_to_filter: string
+        :param ami_attribute: The attribute of each list item to apply filter to. Valid attributes contained in boto.ec2.image.Image
+        :type ami_attribute: string
         
         :param re_string: Regular expression to apply on attr_to_filter
         :type re_string: string
         """
-        self.re_filters.append(
-                        {
-                        'attribute' : attr_to_filter,
-                        're_string': re_string
-                        }
-                    )
+        self.re_filters.append(AMIRegexFilter(ami_attribute, re_string))
                     
         return self
         
@@ -139,8 +134,29 @@ class AMIFilter(object):
         'instance-store': 'instance-store'
     }
     """ Supported values for root_dev_type """
-    
+
+class AMIRegexFilter:
+    """
+    A Regular Expression filter defines a regular expression and the
+    corresponding attribute/property that the filter should be applied
+    to AMIs/Images returned by boto.
+    """
+
+    def __init__(self, ami_attribute, re_string):
+        """
+        :param ami_attribute: The attribute to apply the regex to. Must be a valid attribute in a boto.ec2.image.Image object
+        :type ami_attribute: string
+        
+        :param re_string: The regular expression to apply
+        :type re_string: string
+        """
+        self.ami_attribute = ami_attribute
+        self.re_string = re_string
+        
 class Filters:
+    """
+    Some pre-defined search filters
+    """
     LINUX_AMAZON_64_PV_EBS = AMIFilter(owner='amazon', os='',
                                 arch='x86_64', virt_type='paravirtual', 
                                 root_dev_type='ebs')
