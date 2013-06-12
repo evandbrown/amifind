@@ -5,7 +5,7 @@ import amifilter
 import util
 import searchresult
 
-def search_with_filter(f):
+def with_filter(f):
     """
     Search EC2 AMIs based on provided filter
     
@@ -50,27 +50,18 @@ def search_with_filter(f):
 
     return searchresult.SearchResult(result)
 
-def find_amazon_linux_ebs_64_pv_latest(regions=None):
+def amazon_linux_ebs_64_pv_latest(regions=None):
     """
     Find the latest Amazon Linux AMIS
     
     :param regions: Optional list of region strings (e.g., ['us-east-1', 'us-west-2']) to search. Defaults to all regions
     :type regions: list
     """
-    f = amifilter.Filters.LINUX_AMAZON_64_PV_EBS.with_region('us-west-2') ####### Support with_regions
+    f = amifilter.Filters.LINUX_AMAZON_64_PV_EBS.with_regions(regions)
     f.add_re_filter('name', '^(?:(?!beta|rc).)*$')
     f.add_re_filter('description', '^(?:(?!beta|rc).)*$')
     
-    return search_with_filter(f)
-
-def connect_ec2(region_name):
-    """
-    Get a connection to EC2 in the specified region
-    
-    :param region_name: Name of the AWS region to connect to
-    :type region_name: string
-    """
-    return boto.ec2.connect_to_region(region_name)
+    return with_filter(f)
     
 def get_all_regions():
     """

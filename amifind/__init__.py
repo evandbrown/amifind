@@ -8,7 +8,11 @@ This package uses boto and all of its conventions for specifying
 AWS API credentials (i.e., Access Key and Secret Key).
 """
 import amifilter
+import amifind
 import search
 import exceptions
 import searchresult
 import util
+import logging
+
+logging.getLogger('boto').setLevel(logging.CRITICAL)
