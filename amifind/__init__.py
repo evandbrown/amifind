@@ -7,6 +7,8 @@ of a common use case would be to locate the latest AMI for the EBS-backed,
 This package uses boto and all of its conventions for specifying
 AWS API credentials (i.e., Access Key and Secret Key).
 """
-from amifilter import AMIFilter
+import amifilter
 import search
 import exceptions
+import searchresult
+import util
