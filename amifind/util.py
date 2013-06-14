@@ -26,11 +26,11 @@ def filter_object_list(list_to_filter, attr_to_filter, re_string):
     filtered = [ i for i in list_to_filter if getattr(i, attr_to_filter) is not None and filter_re.match(getattr(i, attr_to_filter)) ]
     return filtered
     
-def sort_object_list(list_to_sort, attr_to_sort_on):
+def sort_object_list(list_to_sort, attr_to_sort_on, descending=False):
     
     # No empty lists
     if list_to_sort is None or len(list_to_sort) == 0:
         raise exceptions.AMIFilterException("Can't filter empty list.")
         
     # Sort list. Exception will be thrown if sort attribute doesn't exist in list items
-    return sorted(list_to_sort, key=lambda item: getattr(item, attr_to_sort_on))
+    return sorted(list_to_sort, key=lambda item: getattr(item, attr_to_sort_on), reverse=descending)
