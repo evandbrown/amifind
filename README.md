@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/evandbrown/amifind.png)](https://travis-ci.org/evandbrown/amifind.png)
+
 # amifind
 This package provides convenience methods for finding the latest versions of public Amazon Machine Images published by specific providers.
 
