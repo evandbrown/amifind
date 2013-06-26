@@ -29,9 +29,10 @@ root_device_types = {
     's3': 'instance-store',
     'instance-store': 'instance-store'
 }
+""" Supported values for root_dev_type """
 
 just_one = {
     'first' : 0,
     'last' : -1
 }
-""" Supported values for root_dev_type """
+""" Indexes for first and last items """
